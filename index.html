@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amanecer Gaming | eSports Organization</title>
+    <link rel="stylesheet" href="css/style.css?v=nexus_2.1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Firebase SDK (For Global Sync) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="js/translations.js" defer></script>
+    <script src="js/data.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+    <header id="main-header">
+        <nav class="container">
+            <div class="logo-text">AMANECER <span>GAMING</span></div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active" data-section="home">Inicio</a></li>
+                <li><a href="#tournaments" data-section="tournaments">Torneos</a></li>
+                <li><a href="#esports" data-section="esports">eSports</a></li>
+                <li><a href="#community" data-section="community">Comunidad</a></li>
+                <li><a href="#about" data-section="about">Nosotros</a></li>
+            </ul>
+            <div class="header-actions">
+                <div class="lang-switch">
+                    <button id="lang-es" class="lang-btn active">ES</button>
+                    <button id="lang-pt" class="lang-btn">PT</button>
+                </div>
+                <div class="auth-buttons">
+                    <button id="admin-btn" class="btn btn-outline btn-sm"
+                        style="display:none; border-color: var(--accent-orange); color: var(--accent-orange);"><i
+                            class="fas fa-cog"></i> Panel</button>
+                    <button id="account-btn" class="btn btn-outline btn-sm"><i class="fas fa-user-circle"></i>
+                        Cuenta</button>
+                </div>
+            </div>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main id="content-area">
+        <!-- Sections will be rendered here dynamically or shown/hidden -->
+        <section id="home" class="active-section">
+            <div class="hero">
+                <div class="hero-slider">
+                    <div class="hero-content">
+                        <h1 data-t="hero_title">AMANECER <span>GAMING</span></h1>
+                        <p data-t="hero_subtitle">Elevando el nivel competitivo de Latinoamérica Sur</p>
+                        <div class="hero-btns">
+                            <button class="btn btn-primary" onclick="showModal('login')" data-t="login">Iniciar
+                                Sesión</button>
+                            <button class="btn btn-outline" onclick="showModal('register')"
+                                data-t="register">Registrarse</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Live Ticker Banner -->
+                <div class="live-ticker-banner">
+                    <div class="ticker-wrapper">
+                        <div class="ticker-text">
+                            <span><i class="fas fa-satellite-dish"></i>amanecer gaming renueva</span>
+                            <span><i class="fas fa-trophy"></i> cupos disponibles torneo amanecer</span>
+                            <span><i class="fas fa-users"></i> streams diarios - únete</span>
+                            <span><i class="fas fa-satellite-dish"></i> amanecer gaming renueva</span>
+                            <span><i class="fas fa-trophy"></i> cupos disponibles torneo amanecer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section id="tournaments" class="section">
+            <div class="container">
+                <div class="tournament-header">
+                    <h2 class="section-title" data-t="tournaments">Torneos</h2>
+                    <div class="view-selector">
+                        <button id="view-all" class="btn btn-sm active" data-t="view_all">Todos</button>
+                        <button id="view-liga" class="btn btn-sm" data-t="view_liga">Liga</button>
+                        <button id="view-bracket" class="btn btn-sm" data-t="view_bracket">Bracket</button>
+                    </div>
+                </div>
+                <div id="tournament-content"></div>
+            </div>
+        </section>
+
+        <section id="esports" class="section">
+            <div class="container">
+                <h2 class="section-title" data-t="esports_title">Amanecer eSports</h2>
+                <div id="esports-dashboard"></div>
+            </div>
+        </section>
+
+        <section id="community" class="section">
+            <div class="container">
+                <h2 class="section-title" data-t="community">Comunidad</h2>
+                <div id="milestones-container" class="milestones-grid"></div>
+                
+                <!-- Videos Grid -->
+                <div class="comm-videos glass" style="padding: 40px; border-radius: 20px; margin-bottom: 30px;">
+                    <h3 style="color: var(--accent-orange); margin-bottom: 30px; text-align: center; text-transform: uppercase;">Contenido Destacado</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+                        
+                        <div class="video-card">
+                            <div class="google-drive-embed">
+                                <video width="100%" height="100%" controls playsinline style="object-fit: cover;">
+                                    <source src="video/presentacion-amanecer.mp4" type="video/mp4">
+                                    Tu navegador no soporta el formato de video.
+                                </video>
+                            </div>
+                            <h4 style="color: #fff; margin-top: 15px; text-align: center; font-size: 1.1rem;">LA PRESENTACIÓN DE AMANECER</h4>
+                            <p style="text-align:center; margin-top:10px;"><a href="https://youtu.be/Z2HmsxLD-rI" target="_blank" style="color: var(--accent-orange); font-size: 0.8rem;">Abrir en YouTube <i class="fas fa-external-link-alt"></i></a></p>
+                        </div>
+
+                        <div class="video-card">
+                            <div class="google-drive-embed">
+                                <video width="100%" height="100%" controls playsinline style="object-fit: cover;">
+                                    <source src="video/circulo-clasificatorio.mp4" type="video/mp4">
+                                    Tu navegador no soporta el formato de video.
+                                </video>
+                            </div>
+                            <h4 style="color: #fff; margin-top: 15px; text-align: center; font-size: 1.1rem;">EL CIRCUITO CLASIFICATORIO</h4>
+                            <p style="text-align:center; margin-top:10px;"><a href="https://youtu.be/7XbP0cA2nAk" target="_blank" style="color: var(--accent-orange); font-size: 0.8rem;">Abrir en YouTube <i class="fas fa-external-link-alt"></i></a></p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="community-wall"></div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title" data-t="about_us">Sobre Nosotros</h2>
+                <div id="about-timeline"></div>
+            </div>
+        </section>
+
+        <section id="admin" class="section">
+            <div class="container">
+                <h2 class="section-title">Panel de Administración</h2>
+                <div id="admin-panel-content" class="glass" style="padding: 30px; border-radius: 20px;">
+                    <!-- Admin UI will be injected here -->
+                </div>
+            </div>
+        </section>
+
+        <section id="profile" class="section">
+            <div class="container">
+                <h2 class="section-title" data-t="my_account">Mi Cuenta</h2>
+                <div id="profile-content"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content glass">
+            <span class="close">&times;</span>
+            <div id="modal-auth-container">
+                <!-- Login View -->
+                <div id="login-view">
+                    <h3>Iniciar Sesión</h3>
+                    <form id="login-form">
+                        <input type="text" placeholder="Usuario o Email" required>
+
+                        <input type="password" placeholder="Contraseña" required>
+                        <button type="submit" class="btn btn-primary w-100 mt-20">Entrar</button>
+                    </form>
+                    <p class="text-center mt-20" style="font-size: 0.9rem; color: var(--text-secondary);">
+                        ¿No tienes cuenta? <a href="#" id="switch-to-register"
+                            style="color: var(--accent-orange); font-weight: bold;">Regístrate</a>
+                    </p>
+                </div>
+                <!-- Register View -->
+                <div id="register-view" style="display: none;">
+                    <h3>Crear Cuenta</h3>
+                    <form id="register-form">
+                        <input type="text" placeholder="Usuario" required>
+                        <input type="email" placeholder="Email" required>
+
+                        <input type="password" placeholder="Contraseña" required>
+                        <button type="submit" class="btn btn-primary w-100 mt-20">Registrarse</button>
+                    </form>
+                    <p class="text-center mt-20" style="font-size: 0.9rem; color: var(--text-secondary);">
+                        ¿Ya tienes cuenta? <a href="#" id="switch-to-login"
+                            style="color: var(--accent-orange); font-weight: bold;">Ingresa</a>
+                    </p>
+                </div>
+                <!-- Verification View -->
+                <div id="verification-view" style="display: none;">
+                    <h3>Verificación de Correo</h3>
+                    <p
+                        style="text-align: center; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px;">
+                        Hemos enviado un código a tu cuenta de Gmail.</p>
+                    <form id="verify-form">
+                        <input type="text" id="verify-code" placeholder="Código de 6 dígitos" required maxlength="6"
+                            style="text-align: center; font-size: 1.5rem; letter-spacing: 5px;">
+                        <button type="submit" class="btn btn-primary w-100 mt-20">Verificar Código</button>
+                    </form>
+                    <p class="text-center mt-20" style="font-size: 0.9rem; color: var(--text-secondary);">
+                        <a href="#" id="switch-back-register" style="color: var(--accent-orange); font-weight: bold;">←
+                            Editar correo de registro</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container"
+            style="padding: 40px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-top: 1px solid var(--glass-border); margin-top: 50px;">
+            <div class="logo-text">AMANECER <span>GAMING</span></div>
+            <div class="footer-socials" style="display: flex; gap: 20px; font-size: 1.2rem;">
+                <a href="https://www.instagram.com/elamanecermlbb?igsh=MXVvZng1cWFrcnptcg==" target="_blank"
+                    style="color: var(--text-secondary);"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@elamanecermlbb?_r=1&_t=ZS-9515UcpC5C4" target="_blank"
+                    style="color: var(--text-secondary);"><i class="fab fa-tiktok"></i></a>
+                <a href="https://kick.com/elamanecer" target="_blank" style="color: var(--text-secondary);"><i
+                        class="fas fa-video"></i></a>
+                <a href="https://discord.gg/kGQFFnmBuG" target="_blank" style="color: var(--text-secondary);"><i
+                        class="fab fa-discord"></i></a>
+                <a href="https://youtube.com/@comunidadamanecer1?si=iAAQHnveTqejkNLT" target="_blank"
+                    style="color: var(--text-secondary);"><i class="fab fa-youtube"></i></a>
+                <a href="https://chat.whatsapp.com/LPUb3w7lbgILbDFVf54AX3?mode=ac_t" target="_blank"
+                    style="color: var(--text-secondary);"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.8rem;" data-t="copyright">&copy; 2026 Amanecer Gaming eSports. Todos
+                los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Admin Panel Styles -->
+    <style>
+        .admin-controls select,
+        .admin-controls input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: white;
+            transition: var(--transition-fast);
+        }
+
+        .admin-controls select:focus,
+        .admin-controls input:focus {
+            border-color: var(--accent-orange);
+            background: rgba(255, 140, 0, 0.05);
+            outline: none;
+        }
+
+        .team-edit-row {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition-fast);
+        }
+
+        .team-edit-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 140, 0, 0.2);
+        }
+
+        #admin-editor-area {
+            animation: fadeIn 0.4s ease;
+        }
+
+        @media (max-width: 600px) {
+            .team-edit-row {
+                grid-template-columns: 1fr !important;
+                gap: 5px !important;
+            }
+        }
+    </style>
+
+</body>
+
+</html>
